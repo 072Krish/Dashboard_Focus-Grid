@@ -1004,6 +1004,7 @@ body.dark-mode .page-btn i{
     margin-bottom:25px;
     justify-content:flex-start;
     flex-wrap:wrap;
+    border-top: none !important;
 }
 
 .page-btn{
