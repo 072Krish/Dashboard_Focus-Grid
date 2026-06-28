@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSS Grid Layout Example</title>
+    <title>Grid Focus - All Tasks </title>
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
@@ -47,7 +47,7 @@
                         Dashboard
                     </li>
 
-                    <li>
+                    <li class="active">
                         <i class="fa-regular fa-clipboard"></i>
                         My Tasks
                     </li>
@@ -57,7 +57,7 @@
                         Completed Tasks
                     </li>
 
-                                        <li>
+                    <li>
                         <i class="fa-regular fa-bookmark"></i>
                         In Progress Tasks
                     </li>
@@ -129,7 +129,7 @@
             </div>
 
         </aside>
-                <!-- MAIN CONTENT -->
+        <!-- MAIN CONTENT -->
         <main class="main-content">
 
             <!-- TOPBAR -->
@@ -156,76 +156,119 @@
                         <i class="fa-solid fa-moon"></i>
                     </div>
 
+                    <button id="resetFilters" class="reset-filter-btn" title="Clear Filters">
+                        <i class="fas fa-rotate-left"></i> </button>
+
+                    <button class="filter-btn" id="openFilter">
+                        <i class="fa-solid fa-filter"></i>
+                        Filters
+                    </button>
+
                 </div>
 
             </header>
-            <div class="links-wrapper">
 
-<div class="filter-section">
+            <!-- ================= OVERLAY ================= -->
+            <div class="filter-overlay" id="filterOverlay"></div>
 
-    <input type="text" id="taskSearch" placeholder="Task Name">
+            <!-- ================= FILTER DRAWER ================= -->
+            <div class="filter-drawer" id="filterDrawer">
 
-    <select id="filterType">
-        <option value="">Select Filter</option>
-        <option value="priority">Priority Based</option>
-        <option value="status">Status Based</option>
-        <option value="sort">Sort Items</option>
-    </select>
+                <!-- Header -->
+                <div class="drawer-header">
+                    <h2>Task Filters</h2>
+                    <button class="close-btn" id="closeFilter">&times;</button>
+                </div>
 
-    <select id="filterValue">
-        <option value="">Select Type</option>
-        <option value="Low Priority">Low Priority</option>
-        <option value="Medium Priority">Medium Priority</option>
-        <option value="High Priority">High Priority</option>
-        <option value="Pending">Status Pending</option>
-        <option value="In Progress">Status In Progress</option>
-        <option value="Completed">Status Completed</option>
-        <option value="az">Task Name (A-Z)</option>
-        <option value="za">Task Name (Z-A)</option>
-    </select>
+                <!-- Search -->
+                <div class="filter-group">
+                    <label>Search Task</label>
+                    <input type="text" id="taskSearch" placeholder="Search by task name...">
+                </div>
 
-    <button class="btn-filter">Filter</button>
-    <button class="btn-reset">Reset</button>
+                <!-- Priority -->
+                <div class="filter-group">
+                    <label>Priority</label>
 
-</div>
+                    <label><input type="radio" name="priority" value="" checked> All</label>
+                    <label><input type="radio" name="priority" value="High"> High</label>
+                    <label><input type="radio" name="priority" value="Medium"> Medium</label>
+                    <label><input type="radio" name="priority" value="Low"> Low</label>
+                </div>
 
-    <!-- Link Card -->
-<div id="noResults">
-    No Result Found
-</div>
-<div id="tasksContainer" class="tasks-container">
-</div>
+                <!-- Status -->
+                <div class="filter-group">
+                    <label>Status</label>
 
-<div class="edit-modal" id="editModal">
+                    <label><input type="radio" name="status" value="" checked> All</label>
+                    <label><input type="radio" name="status" value="Pending"> Pending</label>
+                    <label><input type="radio" name="status" value="In Progress"> In Progress</label>
+                    <label><input type="radio" name="status" value="Completed"> Completed</label>
+                </div>
 
-    <div class="edit-modal-content">
+                <!-- Sort -->
+                <div class="filter-group">
+                    <label>Sort By</label>
 
-        <button class="close-modal" id="closeEdit">×</button>
+                    <select id="sortType">
+                        <option value="">None</option>
+                        <option value="az">A - Z</option>
+                        <option value="za">Z - A</option>
+                        <option value="high">Priority (High → Low)</option>
+                        <option value="low">Priority (Low → High)</option>
+                    </select>
+                </div>
 
-        <h2>Edit Task</h2>
+                <!-- Buttons -->
+                <div class="drawer-buttons">
+                    <button class="reset-btn" type="button">Reset</button>
+                    <button class="apply-btn" type="button">Apply</button>
+                </div>
 
-        <input
-            type="text"
-            id="editTaskName"
-            placeholder="Task Name"
-        >
+            </div>
 
-        <select id="editTaskStatus">
-            <option value="pending">Pending</option>
-            <option value="progress">In Progress</option>
-            <option value="completed">Completed</option>
-        </select>
 
-        <button id="saveChanges" class="save-btn">
-            Save Changes
-        </button>
+            <!-- ================= TASKS CONTAINER ================= -->
+            <div class="tasks-container" id="tasksContainer"></div>
+            <div id="pagination" class="pagination"></div>
 
-    </div>
+            <!-- No Results -->
+            <div id="noResults" style="display:none; text-align:center; margin-top:20px;">
+                No Result found
+            </div>
 
-</div>
+            <!-- Link Card -->
+            <div id="noResults">
+                No Result Found
+            </div>
+            
+            <div class="edit-modal" id="editModal">
 
-    <script src="mytask.js"></script>
+                <div class="edit-modal-content">
 
+                    <button class="close-modal" id="closeEdit">×</button>
+
+                    <h2>Edit Task</h2>
+
+                    <input type="text" id="editTaskName" placeholder="Task Name">
+
+                    <select id="editTaskStatus">
+                        <option value="pending">Pending</option>
+                        <option value="progress">In Progress</option>
+                        <option value="completed">Completed</option>
+                    </select>
+
+                    <button id="saveChanges" class="save-btn">
+                        Save Changes
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <script src="mytask.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 </body>
